@@ -124,11 +124,13 @@ fn linking_info() {
 
 #[cfg(feature = "static")]
 fn linking_info() {
-    println!("cargo:rustc-link-lib=static=z");
-    println!("cargo:rustc-link-lib=static=elf");
-    println!("cargo:rustc-link-lib=static=xml2");
-    println!("cargo:rustc-link-lib=static=lzma");
-    println!("cargo:rustc-link-lib=static=tinfo");
+    use pkg_config::Config;
+
+    Config::new().statik(true).probe("zlib").unwrap();
+    Config::new().statik(true).probe("libelf").unwrap();
+    Config::new().statik(true).probe("libxml-2.0").unwrap();
+    Config::new().statik(true).probe("liblzma").unwrap();
+    Config::new().statik(true).probe("tinfo").unwrap();
 
     println!("cargo:rustc-link-lib=stdc++");
 
