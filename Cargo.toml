@@ -13,6 +13,9 @@ documentation = "https://docs.rs/bcc-sys"
 homepage = "https://github.com/rust-bpf/bcc-sys"
 edition = '2018'
 
+[build-dependencies]
+pkg-config = "0.3.17"
+
 [build-dependencies.bindgen]
 version = "0.51.1"
 optional = true
