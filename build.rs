@@ -183,8 +183,18 @@ fn linking_info() {
 // this function generates the linking info for llvm
 #[allow(dead_code)]
 fn llvm_static_linking() {
+    let llvm_config_lib_dir = std::process::Command::new("llvm-config")
+        .arg("--libs")
+        .arg("--link-static")
+        .output()
+        .expect("failed to run llvm-config");
+    let llvm_lib_dir = String::from_utf8(llvm_config_lib_dir.stdout)
+        .expect("llvm-config output contains non-utf8 characters");
+    println!("cargo:rustc-link-search=native={}", llvm_lib_dir.trim());
+
     let llvm_config = std::process::Command::new("llvm-config")
         .arg("--libs")
+        .arg("--link-static")
         .output()
         .expect("failed to run llvm-config");
     let llvm_libs = String::from_utf8(llvm_config.stdout)
